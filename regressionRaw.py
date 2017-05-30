@@ -7,8 +7,8 @@ import random
 style.use("fivethirtyeight")
 
 
-X = np.array([1,2,3,4,5,6], dtype=np.float64)
-Y = np.array([5,4,6,5,6,7], dtype=np.float64)
+# X = np.array([1,2,3,4,5,6], dtype=np.float64)
+# Y = np.array([5,4,6,5,6,7], dtype=np.float64)
 
 # plt.scatter(X,Y)
 # plt.show()
@@ -16,11 +16,17 @@ Y = np.array([5,4,6,5,6,7], dtype=np.float64)
 def create_dataset(size, variance, step = 2, correlation = False):
     val = 1
     Y = []
-    for i in range(hm):
+    for i in range(size):
         y = val + random.randrange(-variance, variance)
-        Y.apend(y)    
+        Y.append(y)
+        if correlation and correlation == "pos":
+            val+=step
+        elif correlation and correlation == "neg":
+            val-=step
+    X = [i for i in range(len(Y))]
     return np.array(X, dtype=np.float64), np.array(Y, dtype=np.float64)
 
+X, Y = create_dataset(40,80,2,correlation=False)
 
 def best_fit_slope_intercept(X,Y):
 
@@ -50,6 +56,6 @@ R_squared = R_squared(Y, regression_line)
 print(R_squared)
 
 plt.scatter(X,Y)
-plt.scatter(predict_x,predict_y,color="g")
+# plt.scatter(predict_x,predict_y,color="g")
 plt.plot(X,regression_line)
 plt.show()
